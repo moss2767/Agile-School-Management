@@ -1,29 +1,51 @@
 @startuml
 'https://plantuml.com/class-diagram
 
+interface Serializable {
+Method serialize
+Method deserialize
+}
+
 abstract class Person {
 - String Name
 - String Email
 }
+
 class SchoolSystem {
--
+createStudent()
+createCourse()
+createTeacher()
+createGrade()
+enrollStudentInCourse()
+unEnrollStudentInCourse()
+assignGradeToStudentInCourse()
+unassignGradeToStudentInCourse()
+assignCourseToTeacher()
+unassignCourseToTeacher()
 }
+
 class Student {
+- int studentID
 - Array[String] Courses
 }
+
 class Teacher {
+- in teacherID
 - Array TaughtCourses
 }
 
 class Grade {
+- Enum Grade
 - String Student
 - String Course
 }
 
 class Course {
+- int courseID
 - Array[String] EnrolledStudents
 - ID Teacher
 }
+
 Person <|-- Teacher
 Person <|-- Student
 Teacher --o Course
@@ -31,9 +53,4 @@ Student o--o Course
 Course --> Grade
 Student --> Grade
 Teacher --> Course
-
-interface Serializable {
-Method serialize
-Method deserialize
-}
 @enduml
