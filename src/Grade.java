@@ -1,6 +1,6 @@
 public class Grade {
     public enum Mark {
-        F, E, D, C, B, A, S
+        F, E, D, C, B, A
     }
 
     private final String studentID, courseID;
