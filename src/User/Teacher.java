@@ -4,17 +4,19 @@ public class Teacher extends Person {
     private int teacherID;
     private List<Course> coursesTaught;
 
-    public Teacher(int teacherID, List<Course> coursesTaught) {
+    public Teacher(String name, String email) {
+        super(name,email);
+    }
+
+    public Teacher(String name, String email, int teacherID, List<Course> coursesTaught) {
+        super(name,email);
         this.teacherID = teacherID;
         this.coursesTaught = coursesTaught;
     }
 
-    public Teacher(int teacherID) {
+    public Teacher(String name, String email, int teacherID) {
+        super(name,email);
         this.teacherID = teacherID;
-    }
-
-    public Teacher(List<Course> coursesTaught) {
-        this.coursesTaught = coursesTaught;
     }
 
     public int getTeacherID() {
