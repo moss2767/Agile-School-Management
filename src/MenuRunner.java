@@ -9,6 +9,10 @@ public class MenuRunner {
         InputManagementHandler.runMenuUntilQuit(new LinkedHashMap<>() {{
             System.out.println("Welcome to school");
             put("Show dummy student", () -> System.out.println("This is a student"));
+            put("Submenu", () -> InputManagementHandler.runMenuUntilQuit(new LinkedHashMap<>() {{
+                put("Option 1", ()-> System.out.println("Option 1"));
+                put("Option 2", ()-> System.out.println("Option 2"));
+            }}));
         }});
     }
 
