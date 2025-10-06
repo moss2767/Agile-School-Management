@@ -1,0 +1,39 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract class Person {
+- String Name
+- String Email
+}
+class SchoolSystem {
+-
+}
+class Student {
+- Array[String] Courses
+}
+class Teacher {
+- Array TaughtCourses
+}
+
+class Grade {
+- String Student
+- String Course
+}
+
+class Course {
+- Array[String] EnrolledStudents
+- ID Teacher
+}
+Person <|-- Teacher
+Person <|-- Student
+Teacher --o Course
+Student o--o Course
+Course --> Grade
+Student --> Grade
+Teacher --> Course
+
+interface Serializable {
+Method serialize
+Method deserialize
+}
+@enduml
