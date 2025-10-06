@@ -1,5 +1,8 @@
+package menu;
+
+import utilities.InputManagementHandler;
+
 import java.util.LinkedHashMap;
-import java.util.Scanner;
 
 public class MenuRunner {
 //    Scanner scanner = new Scanner(System.in);
