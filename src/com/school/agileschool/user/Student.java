@@ -1,10 +1,11 @@
 package com.school.agileschool.user;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Student extends Person {
     private String studentID;
-    private List<String> courses;
+    private final List<String> courses = new ArrayList<>();
 
     public Student(String name, String email) {
         super(name, email);
@@ -13,7 +14,6 @@ public class Student extends Person {
     public Student(String name, String email, String studentID, List<String> courses) {
         super(name, email);
         this.studentID = studentID;
-        this.courses = courses;
     }
 
     public String getStudentID () {
@@ -28,7 +28,15 @@ public class Student extends Person {
         return courses;
     }
 
-    public void setCourses (List<String> courses) {
-        this.courses = courses;
+    public void addCourse (String course) {
+        this.courses.add(course);
+    }
+
+    public void addCourses (List<String> courses) {
+        this.courses.addAll(courses);
+    }
+
+    public void removeCourse (String course) {
+        courses.remove(course);
     }
 }
