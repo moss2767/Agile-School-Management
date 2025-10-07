@@ -1,3 +1,5 @@
+package com.school.agileschool.common;
+
 import java.util.ArrayList;
 import java.util.List;
 

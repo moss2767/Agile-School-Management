@@ -1,4 +1,8 @@
-package User;
+package com.school.agileschool.user;
+
+import com.school.agileschool.common.Course;
+
+import java.util.List;
 
 public class Teacher extends Person {
     private int teacherID;

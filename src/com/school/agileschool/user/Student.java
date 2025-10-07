@@ -1,4 +1,4 @@
-package User;
+package com.school.agileschool.user;
 
 import java.util.ArrayList;
 
