@@ -1,0 +1,60 @@
+{
+  "courses": [
+    {
+      "courseID": "CS101",
+      "name": "Introduction to Computer Science",
+      "assignedTeacherID": "T5678",
+      "enrolledStudentsByID": ["S1234", "S2345", "S3456"]
+    },
+    {
+      "courseID": "MATH201",
+      "name": "Calculus II",
+      "assignedTeacherID": "T7890",
+      "enrolledStudentsByID": ["S4567", "S5678"]
+    },
+    {
+      "courseID": "ENG301",
+      "name": "English Literature",
+      "assignedTeacherID": "T1122",
+      "enrolledStudentsByID": ["S6789", "S7890", "S8901"]
+    },
+    {
+      "courseID": "HIST210",
+      "name": "World History",
+      "assignedTeacherID": "T3344",
+      "enrolledStudentsByID": ["S9012", "S0123"]
+    },
+    {
+      "courseID": "BIO105",
+      "name": "General Biology",
+      "assignedTeacherID": "T5566",
+      "enrolledStudentsByID": ["S1234", "S2345", "S3456", "S4567"]
+    }
+  ],
+  "students": [
+    {
+      "studentID": "S1234",
+      "name": "Alice Johnson",
+      "email": "alice.johnson@example.com",
+      "courses": ["CS101", "BIO105"]
+    },
+    {
+      "studentID": "S2345",
+      "name": "Bob Smith",
+      "email": "bob.smith@example.com",
+      "courses": ["CS101", "BIO105"]
+    },
+    {
+      "studentID": "S3456",
+      "name": "Carol White",
+      "email": "carol.white@example.com",
+      "courses": ["CS101", "BIO105"]
+    },
+    {
+      "studentID": "S4567",
+      "name": "David Brown",
+      "email": "david.brown@example.com",
+      "courses": ["MATH201", "BIO105"]
+    }
+  ]
+}

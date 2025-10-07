@@ -4,6 +4,28 @@ import java.util.*;
 import java.util.concurrent.Callable;
 
 public class InputManagementHandler {
+    public static int getLineAsNumber(String prompt){
+        return getLineAsNumber(new Scanner(System.in), prompt);
+    }
+
+    public static int getLineAsNumber(Scanner scanner, String prompt){
+        System.out.print(stringToPrompt(prompt));
+        return Integer.parseInt(scanner.nextLine());
+    }
+
+    public static String getLineAsString(String prompt){
+        return getLineAsString(new Scanner(System.in), prompt);
+    }
+
+    public static String getLineAsString(Scanner scanner, String prompt){
+        System.out.print(stringToPrompt(prompt));
+        return scanner.nextLine();
+    }
+
+    public static String stringToPrompt(String prompt){
+        return prompt + ": ";
+    }
+
     public static String runMenuUntilQuit(Map<String, Runnable> optionMap) {
         return runMenuUntilQuit(new Scanner(System.in), optionMap);
     }
