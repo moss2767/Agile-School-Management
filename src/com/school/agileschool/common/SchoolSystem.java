@@ -87,6 +87,30 @@ public class SchoolSystem {
         return false;
     }
 
+    public boolean assignTeacherToCourse(String teacherID, String courseID){
+        if (!coursesByID.containsKey(courseID) || !peopleByID.containsKey(teacherID)){
+            return false;
+        }
+        Course course = coursesByID.get(courseID);
+        if (course.getAssignedTeacherID().equals(teacherID)) {
+            return false;
+        }
+        if (peopleByID.get(teacherID) instanceof Teacher teacher) {
+            if (teacher.getCoursesTaught().contains(courseID)) {
+                return false;
+            }
+            if (peopleByID.containsKey(course.getAssignedTeacherID())) {
+                if (peopleByID.get(course.getAssignedTeacherID()) instanceof Teacher t) {
+                    t.removeCourseTaught(courseID);
+                }
+            }
+            teacher.addCourseTaught(courseID);
+            course.setAssignedTeacherID(teacherID);
+            return true;
+        }
+        return false;
+    }
+
     public SchoolSystem getInstance() {
         if (instance == null) {
             instance = new SchoolSystem();
