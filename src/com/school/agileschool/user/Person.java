@@ -1,4 +1,4 @@
-package User;
+package com.school.agileschool.user;
 
 public abstract class Person {
     private String name;

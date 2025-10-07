@@ -1,3 +1,5 @@
+package com.school.agileschool.common;
+
 public class Grade {
     public enum Mark {
         F, E, D, C, B, A

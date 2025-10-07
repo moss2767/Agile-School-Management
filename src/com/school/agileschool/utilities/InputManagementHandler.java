@@ -1,4 +1,4 @@
-package utilities;
+package com.school.agileschool.utilities;
 
 import java.util.*;
 import java.util.concurrent.Callable;
@@ -27,7 +27,7 @@ public class InputManagementHandler {
         String chosenMenuItem = null;
         while (true) {
             List<String> keys = new ArrayList<>(optionMap.keySet());
-            // Print menu options with indexes
+            // Print com.school.agileschool.menu options with indexes
             for (int i = 0; i < keys.size(); i++) {
                 System.out.println(i + ": " + keys.get(i));
             }
@@ -59,7 +59,7 @@ public class InputManagementHandler {
         List<String> keys = new ArrayList<>(optionMap.keySet());
         T chosenMenuItem = null;
         while (true) {
-            // Print menu options with indexes
+            // Print com.school.agileschool.menu options with indexes
             for (int i = 0; i < keys.size(); i++) {
                 System.out.println(i + ": " + keys.get(i));
             }

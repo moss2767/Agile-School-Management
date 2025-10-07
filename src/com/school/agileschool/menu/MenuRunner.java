@@ -1,6 +1,6 @@
-package menu;
+package com.school.agileschool.menu;
 
-import utilities.InputManagementHandler;
+import com.school.agileschool.utilities.InputManagementHandler;
 
 import java.util.LinkedHashMap;
 
