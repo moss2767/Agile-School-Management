@@ -1,34 +1,34 @@
 package com.school.agileschool.user;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Student extends Person {
-    private int studentID;
-    private ArrayList<String> courses;
+    private String studentID;
+    private List<String> courses;
 
     public Student(String name, String email) {
         super(name, email);
     }
 
-    public Student(String name, String email, int studentID, ArrayList<String> courses) {
+    public Student(String name, String email, String studentID, List<String> courses) {
         super(name, email);
         this.studentID = studentID;
         this.courses = courses;
     }
 
-    public int getStudentID () {
+    public String getStudentID () {
         return studentID;
     }
 
-    public void setStudentID (int studentID) {
+    public void setStudentID (String studentID) {
         this.studentID = studentID;
     }
 
-    public ArrayList<String> getCourses () {
+    public List<String> getCourses () {
         return courses;
     }
 
-    public void setCourses (ArrayList<String> courses) {
+    public void setCourses (List<String> courses) {
         this.courses = courses;
     }
 }
