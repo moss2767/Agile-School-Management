@@ -43,15 +43,9 @@ public class Student extends Person {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Student name: ");
-        sb.append(getName());
-        sb.append("\n");
-        sb.append("Student ID: ");
-        //sb.append();
-        sb.append("\n");
-        sb.append("Student e-mail: ");
-        sb.append(getEmail());
-        sb.append("\n");
+        sb.append(String.format("Student name: %s%n", this.getName()));
+        sb.append(String.format("Student ID: %s%n", this.getStudentID()));
+        sb.append(String.format("Student e-mail: %s%n", this.getEmail()));
         return sb.toString();
     }
 
