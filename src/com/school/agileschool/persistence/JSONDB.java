@@ -44,7 +44,7 @@ public class JSONDB {
     public void writeToDisk() throws IOException {
         File file = new File(FILENAME);
         Gson gson = new Gson();
-        String str = gson.toJson(new JSONDB(), JSONDB.class);
+        String str = gson.toJson(this, JSONDB.class);
         try (FileWriter writer = new FileWriter(FILENAME)) {
             writer.write(str);
         }
