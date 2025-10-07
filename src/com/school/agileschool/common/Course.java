@@ -5,15 +5,24 @@ import java.util.List;
 
 public class Course {
     private final String courseID;
-    private String assignedTeacherID = "";
+    private String name, assignedTeacherID = "";
     private final List<String> enrolledStudentsByID = new ArrayList<>();
 
-    public Course(String courseID){
+    public Course(String courseID, String name){
         this.courseID = courseID;
+        this.name = name;
     }
 
     public String getCourseID() {
         return courseID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAssignedTeacherID() {
