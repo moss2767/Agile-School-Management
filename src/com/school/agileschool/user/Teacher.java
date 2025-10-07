@@ -7,20 +7,16 @@ public class Teacher extends Person {
     private String teacherID;
     private final ArrayList<String> coursesTaught = new ArrayList<>();
 
-    public Teacher(String name, String email) {
-        super(name,email);
-    }
-
-    public Teacher(String name, String email, String teacherID) {
-        super(name,email);
-        this.teacherID = teacherID;
+    public Teacher(String firstName, String lastName, String email) {
+        super(firstName,lastName,email);
+        this.teacherID = String.format("T-%s",generatePersonID());
     }
 
     public String getTeacherID() {
         return teacherID;
     }
 
-    public void setTeacherID(String teacherID) {
+    public void modifyTeacherID(String teacherID) {
         this.teacherID = teacherID;
     }
 
@@ -39,8 +35,9 @@ public class Teacher extends Person {
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("Name: %s%n", this.getName()));
-        sb.append(String.format("Email: %s%n", this.getEmail()));
+        sb.append(String.format("Teacher first name: %s%n", this.getFirstName()));
+        sb.append(String.format("Teacher last name: %s%n", this.getLastName()));
+        sb.append(String.format("Teacher email: %s%n", this.getEmail()));
         sb.append(String.format("TeacherID: %s%n", teacherID));
         return sb.toString();
     }
