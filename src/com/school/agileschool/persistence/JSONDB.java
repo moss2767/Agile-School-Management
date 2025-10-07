@@ -41,8 +41,13 @@ public class JSONDB {
             return initializeFromDisk();
         }
     }
-    public boolean writeToDisk() {
-        return true;
+    public void writeToDisk() throws IOException {
+        File file = new File(FILENAME);
+        Gson gson = new Gson();
+        String str = gson.toJson(new JSONDB(), JSONDB.class);
+        try (FileWriter writer = new FileWriter(FILENAME)) {
+            writer.write(str);
+        }
     }
 
     public static JSONDB getInstance() {
