@@ -1,10 +1,17 @@
 package com.school.agileschool;
 
-import com.school.agileschool.menu.MenuRunner;
+import com.school.agileschool.menu.MenuRunnerUser;
+import com.school.agileschool.persistence.JSONDB;
 
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello and welcome!");
-        MenuRunner.getInstance().run();
+        try {
+            JSONDB.getInstance().initializeFromDisk();
+        } catch(Exception e) {
+            throw new RuntimeException("Runtime error", e);
+        }
+        // MenuRunner.getInstance().run();
+        MenuRunnerUser.run();
     }
 }
