@@ -1,8 +1,7 @@
 package com.school.agileschool;
 
-import com.school.agileschool.menu.MenuRunner;
 import com.school.agileschool.menu.MenuRunnerUser;
-import com.school.agileschool.mockup.JSONDB;
+import com.school.agileschool.persistence.JSONDB;
 
 public class Main {
     public static void main(String[] args) {

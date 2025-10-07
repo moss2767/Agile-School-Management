@@ -1,4 +1,4 @@
-package com.school.agileschool.persistance;
+package com.school.agileschool.persistence;
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.school.agileschool.common.Course;
@@ -19,7 +19,7 @@ public class JSONDB {
     @Expose
     private List<Student> students = new ArrayList<>();
 
-    private static String FILENAME = "persistance/db.json";
+    private static String FILENAME = "persistence/db.json";
     JSONDB () {
 
     }
