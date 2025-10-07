@@ -35,4 +35,13 @@ public class Teacher extends Person {
     public void removeCourseTaught(String course){
         this.coursesTaught.remove(course);
     }
+
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Name: %s%n", this.getName()));
+        sb.append(String.format("Email: %s%n", this.getEmail()));
+        sb.append(String.format("TeacherID: %s%n", teacherID));
+        return sb.toString();
+    }
 }
