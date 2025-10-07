@@ -14,13 +14,6 @@ public class SchoolSystem {
 
     private SchoolSystem(){}
 
-    public SchoolSystem getInstance() {
-        if (instance == null) {
-            instance = new SchoolSystem();
-        }
-        return instance;
-    }
-
     public void addStudent(Student student){
         peopleByID.put(student.getStudentID(), student);
     }
@@ -47,7 +40,15 @@ public class SchoolSystem {
             }
             course.enrollStudentByID(studentID);
             student.addCourse(courseID);
+            return true;
         }
         return false;
+    }
+
+    public SchoolSystem getInstance() {
+        if (instance == null) {
+            instance = new SchoolSystem();
+        }
+        return instance;
     }
 }
