@@ -5,17 +5,12 @@ public class Grade {
         F, E, D, C, B, A
     }
 
-    private final String studentID, courseID;
+    private final String courseID;
     private Mark mark;
 
-    public Grade(Mark mark, String studentID, String courseID){
+    public Grade(Mark mark, String courseID){
         this.mark = mark;
-        this.studentID = studentID;
         this.courseID = courseID;
-    }
-
-    public String getStudentID(){
-        return  studentID;
     }
 
     public String getCourseID(){
