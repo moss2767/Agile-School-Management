@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Hello and welcome!");
         try {
-            JSONDB.getInstance().initializeFromDisk();
+            JSONDB.getInstanceFromDisk();
         } catch(Exception e) {
             throw new RuntimeException("Runtime error", e);
         }

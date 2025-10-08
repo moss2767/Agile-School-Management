@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class JSONDB {
     private static JSONDB instance;
@@ -53,6 +54,7 @@ public class JSONDB {
             return false;
         }
         courses.add(course);
+        return true;
     }
 
     public boolean removeCourse(String courseId) {
@@ -70,6 +72,7 @@ public class JSONDB {
             return false;
         }
         students.add(student);
+        return true;
     }
 
     public boolean removeStudent(String studentId) {
@@ -79,6 +82,22 @@ public class JSONDB {
             return true;
         }
         return false;
+    }
+    public Optional<List<Student>> getStudentsEnrolledInCourse(String courseId) {
+        Optional<Course> course = getCourseById(courseId);
+        if (course.isPresent()) {
+            return Optional.of(
+                    course.get().getEnrolledStudentsByID()
+                            .stream()
+                            .map(this::getStudentByID)
+                            .filter(Optional::isPresent)
+                            .map(Optional::get)
+                            .collect(Collectors.toUnmodifiableList())
+            );
+        }
+        else {
+            return Optional.empty();
+        }
     }
 
     public Optional<List<Course>> getCoursesStudentIsEnrolledIn(String studentID) {
