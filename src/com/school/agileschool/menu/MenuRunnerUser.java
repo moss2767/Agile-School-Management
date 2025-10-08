@@ -39,7 +39,7 @@ public class MenuRunnerUser {
             put("Enroll a student to the school", () -> {
                 List<String> keys = Arrays.asList("First name", "Last name", "Email");
                 Map<String, String> userInputAsHashMap = InputManagementHandler.fillHashMapWithScan(keys);
-                Student student = new Student(userInputAsHashMap.get("First name"), userInputAsHashMap.get("Last name"), userInputAsHashMap.get("Email"));student.modifyStudentID(userInputAsHashMap.get("ID"));
+                Student student = new Student(userInputAsHashMap.get("First name"), userInputAsHashMap.get("Last name"), userInputAsHashMap.get("Email"));
                 student.modifyStudentID(student.generatePersonID());
                 JSONDB.getInstance()
                         .addStudent(student.getStudentID(), student);
@@ -55,7 +55,7 @@ public class MenuRunnerUser {
                         List<Student> matches = JSONDB.getInstance()
                                 .getStudents()
                                 .stream()
-                                .filter(s -> matchingPattern.matcher(studentFullName(s)).find())
+                                .filter(s -> matchingPattern.matcher(s.getName()).find())
                                 .collect(Collectors.toUnmodifiableList());
                         if (matches.isEmpty()) {
                             System.out.println("No matches found");
