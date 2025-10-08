@@ -40,4 +40,8 @@ public class Course {
     public void enrollStudentByID(String studentID){
         enrolledStudentsByID.add(studentID);
     }
+
+    public void unenrollStudentByID(String studentID){
+        enrolledStudentsByID.remove(studentID);
+    }
 }
