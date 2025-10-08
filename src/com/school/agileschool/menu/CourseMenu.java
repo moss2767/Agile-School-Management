@@ -1,11 +1,12 @@
 package com.school.agileschool.menu;
 
 import com.school.agileschool.common.Course;
-import com.school.agileschool.common.SchoolSystem;
 import com.school.agileschool.persistence.JSONDB;
 import com.school.agileschool.utilities.InputManagementHandler;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Optional;
 
 public class CourseMenu {
     static JSONDB db = JSONDB.getInstance();
@@ -24,6 +25,7 @@ public class CourseMenu {
         String id = InputManagementHandler.getLineAsString("Course ID").toUpperCase();
         String name = InputManagementHandler.getLineAsString("Name");
         Course createdCourse = new Course(id, name);
+        db.addCourse(createdCourse.getCourseID(), createdCourse);
     }
 
     static void showCourseFlow() {
