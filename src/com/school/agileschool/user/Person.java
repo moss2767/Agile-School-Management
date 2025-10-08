@@ -43,6 +43,10 @@ public abstract class Person {
     }
 
     public String generatePersonID(){
-        return String.format("%s%s%d", this.firstName.substring(0, 3).toUpperCase(), this.lastName.substring(0,3).toUpperCase(), (int)(Math.random()*100));
+        if(this.firstName.length() < 3 || this.lastName.length() < 3){
+            return String.format("%s%s%d",this.firstName.toUpperCase(), this.lastName.toUpperCase(), (int) (Math.random() * 100));
+        } else {
+            return String.format("%s%s%d", this.firstName.substring(0, 3).toUpperCase(), this.lastName.substring(0, 3).toUpperCase(), (int) (Math.random() * 100));
+        }
     }
 }
