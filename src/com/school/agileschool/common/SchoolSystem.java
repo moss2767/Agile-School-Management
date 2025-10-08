@@ -69,25 +69,35 @@ public class SchoolSystem {
     }
 
     public boolean enrollStudentToCourse(String studentID, String courseID){
-        if (!coursesByID.containsKey(courseID) || !peopleByID.containsKey(studentID)){
-            return false;
-        }
-        Course course = coursesByID.get(courseID);
-        if (course.getEnrolledStudentsByID().contains(studentID)){
-            return false;
-        }
-        if (peopleByID.get(studentID) instanceof Student student) {
-            if (student.getCourses().contains(courseID)) {
+        Optional<Course> course = JSONDB.getInstance().getCourseById(courseID);
+        Optional<Student> student = JSONDB.getInstance().getStudentByID(studentID);
+        if (course.isPresent() && student.isPresent()) {
+            if (course.get().getEnrolledStudentsByID().contains(studentID)
+                    || student.get().getCourses().contains(courseID)) {
                 return false;
             }
-            course.enrollStudentByID(studentID);
-            student.addCourse(courseID);
+            student.get().addCourse(courseID);
+            course.get().enrollStudentByID(studentID);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean unenrollStudentFromCourse(String studentID, String courseID){
+        Optional<Course> course = JSONDB.getInstance().getCourseById(courseID);
+        Optional<Student> student = JSONDB.getInstance().getStudentByID(studentID);
+        if (course.isPresent() && course.get().getEnrolledStudentsByID().contains(studentID)
+                && student.isPresent() && student.get().getCourses().contains(courseID)) {
+            student.get().removeCourse(courseID);
+            course.get().unenrollStudentByID(studentID);
             return true;
         }
         return false;
     }
 
     public boolean assignTeacherToCourse(String teacherID, String courseID){
+        return false;
+        /*
         if (!coursesByID.containsKey(courseID) || !peopleByID.containsKey(teacherID)){
             return false;
         }
@@ -109,6 +119,7 @@ public class SchoolSystem {
             return true;
         }
         return false;
+         */
     }
 
     public SchoolSystem getInstance() {
