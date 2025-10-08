@@ -34,29 +34,25 @@
   "students": [
     {
       "studentID": "S1234",
-      "firstName": "Alice",
-      "lastName": "Johnson",
+      "name": "Alice Johnson",
       "email": "alice.johnson@example.com",
       "courses": ["CS101", "BIO105"]
     },
     {
       "studentID": "S2345",
-      "firstName": "Bob",
-      "lastName": "Smith",
+      "name": "Bob Smith",
       "email": "bob.smith@example.com",
       "courses": ["CS101", "BIO105"]
     },
     {
       "studentID": "S3456",
-      "firstName": "Carol",
-      "lastName": "White",
+      "name": "Carol White",
       "email": "carol.white@example.com",
       "courses": ["CS101", "BIO105"]
     },
     {
       "studentID": "S4567",
-      "firstName": "David",
-      "lastName": "Brown",
+      "name": "David Brown",
       "email": "david.brown@example.com",
       "courses": ["MATH201", "BIO105"]
     }
