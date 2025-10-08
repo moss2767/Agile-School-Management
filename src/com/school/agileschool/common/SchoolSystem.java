@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class SchoolSystem {
-    private SchoolSystem instance;
+    private static SchoolSystem instance;
     private final Map<String, Course> coursesByID = new HashMap<>();
     private final Map<String, Person> peopleByID = new HashMap<>();
 
@@ -87,7 +87,7 @@ public class SchoolSystem {
         return false;
     }
 
-    public SchoolSystem getInstance() {
+    public static SchoolSystem getInstance() {
         if (instance == null) {
             instance = new SchoolSystem();
         }
