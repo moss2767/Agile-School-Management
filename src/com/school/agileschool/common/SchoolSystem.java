@@ -1,14 +1,18 @@
 package com.school.agileschool.common;
 
 import com.school.agileschool.persistence.JSONDB;
+import com.school.agileschool.user.Person;
 import com.school.agileschool.user.Student;
+import com.school.agileschool.user.Teacher;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class SchoolSystem {
-    private SchoolSystem instance;
+    private static SchoolSystem instance;
 
     private SchoolSystem(){}
 
@@ -104,7 +108,7 @@ public class SchoolSystem {
          */
     }
 
-    public SchoolSystem getInstance() {
+    public static SchoolSystem getInstance() {
         if (instance == null) {
             instance = new SchoolSystem();
         }
