@@ -47,6 +47,40 @@ public class JSONDB {
                 .findFirst();
     }
 
+    public boolean addCourse(String courseId, Course course) {
+        Optional<Course> courseOptional = getCourseById(courseId);
+        if (courseOptional.isPresent()) {
+            return false;
+        }
+        courses.add(course);
+    }
+
+    public boolean removeCourse(String courseId) {
+        Optional<Course> courseOptional = getCourseById(courseId);
+        if (courseOptional.isPresent()) {
+            courses.remove(courseOptional.get());
+            return true;
+        }
+        return false;
+    }
+
+    public boolean addStudent(String studentId, Student student) {
+        Optional<Student> studentOptional = getStudentByID(studentId);
+        if (studentOptional.isPresent()) {
+            return false;
+        }
+        students.add(student);
+    }
+
+    public boolean removeStudent(String studentId) {
+        Optional<Student> studentOptional = getStudentByID(studentId);
+        if (studentOptional.isPresent()) {
+            students.remove(studentOptional.get());
+            return true;
+        }
+        return false;
+    }
+
     public Optional<List<Course>> getCoursesStudentIsEnrolledIn(String studentID) {
         Optional<Student> student = getStudentByID(studentID);
         if (student.isPresent()) {
