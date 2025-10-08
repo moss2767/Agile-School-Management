@@ -15,6 +15,9 @@ public abstract class Person {
         this.email = email;
     }
 
+    public String getName () {
+        return firstName + " " + lastName;
+    }
     public String getFirstName () {
         return firstName;
     }
