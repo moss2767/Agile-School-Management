@@ -14,47 +14,23 @@ public class JSONDB {
     private static JSONDB instance;
 
     @Expose
-    private List<Course> courses = new ArrayList<>();
+    final private List<Course> courses = new ArrayList<>();
 
     @Expose
-    private List<Student> students = new ArrayList<>();
+    final private List<Student> students = new ArrayList<>();
 
-    private static String FILENAME = "persistence/db.json";
+    final private static String FILENAME = "persistence/db.json";
+
     JSONDB () {
 
     }
 
-    public static JSONDB initializeFromDisk() throws IOException {
-        File file = new File(FILENAME);
-        Gson gson = new Gson();
-        if (file.exists()) {
-            try (FileReader r =  new FileReader(file)) {
-                JSONDB db = gson.fromJson(r, JSONDB.class);
-                return db;
-            }
-        }
-        else {
-            String str = gson.toJson(new JSONDB(), JSONDB.class);
-            try (FileWriter writer = new FileWriter(FILENAME)) {
-                writer.write(str);
-            }
-            return initializeFromDisk();
-        }
-    }
     public void writeToDisk() throws IOException {
-        File file = new File(FILENAME);
         Gson gson = new Gson();
         String str = gson.toJson(this, JSONDB.class);
         try (FileWriter writer = new FileWriter(FILENAME)) {
             writer.write(str);
         }
-    }
-
-    public static JSONDB getInstance() {
-        if (instance == null) {
-            instance = new JSONDB();
-        }
-        return instance;
     }
 
     public Optional<Student> getStudentByID(String id) {
@@ -76,8 +52,8 @@ public class JSONDB {
         if (student.isPresent()) {
             List<Course> list = student.get().getCourses()
                     .stream()
-                    .map(id -> getCourseById(id))
-                    .filter(optional -> optional.isPresent())
+                    .map(this::getCourseById)
+                    .filter(Optional::isPresent)
                     .map(Optional::get)
                     .toList();
             return Optional.of(list);
@@ -90,8 +66,38 @@ public class JSONDB {
     public List<Course> getCourses() {
         return Collections.unmodifiableList(courses);
     }
-
     public List<Student> getStudents() {
         return Collections.unmodifiableList(students);
+    }
+
+    private static JSONDB instanceFromDisk() throws IOException {
+        File file = new File(FILENAME);
+        Gson gson = new Gson();
+        if (file.exists()) {
+            try (FileReader r =  new FileReader(file)) {
+                return gson.fromJson(r, JSONDB.class);
+            }
+        }
+        else {
+            String str = gson.toJson(new JSONDB(), JSONDB.class);
+            try (FileWriter writer = new FileWriter(FILENAME)) {
+                writer.write(str);
+            }
+            return instanceFromDisk();
+        }
+    }
+
+    public static JSONDB getInstance() {
+        if (instance == null) {
+            instance = new JSONDB();
+        }
+        return instance;
+    }
+
+    public static JSONDB getInstanceFromDisk() throws IOException {
+        if (instance == null) {
+            instance = instanceFromDisk();
+        }
+        return instance;
     }
 }
