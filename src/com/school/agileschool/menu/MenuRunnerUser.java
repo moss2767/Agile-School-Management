@@ -13,9 +13,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class MenuRunnerUser {
-    private static String studentFullName(Student student) {
-        return student.getFirstName() + " " + student.getLastName();
-    }
     public static void runStudentAdministration(Student student){
         System.out.println("You are now administering student: " + student.getName());
         InputManagementHandler.runMenuUntilQuit(new LinkedHashMap<>() {{
