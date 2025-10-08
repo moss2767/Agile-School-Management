@@ -5,7 +5,10 @@ import com.school.agileschool.user.Person;
 import com.school.agileschool.user.Student;
 import com.school.agileschool.user.Teacher;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class SchoolSystem {
@@ -49,15 +52,16 @@ public class SchoolSystem {
     public Optional<List<Course>> getCoursesStudentIsEnrolledIn(String studentID) {
         Optional<Student> student = JSONDB.getInstance().getStudentByID(studentID);
         if (student.isPresent()) {
-            List<Course> list = student.get().getCourses()
-                    .stream()
-                    .map( (courseID) -> {
-                        return JSONDB.getInstance().getCourseById(courseID);
-                    })
-                    .filter(Optional::isPresent)
-                    .map(Optional::get)
-                    .toList();
-            return Optional.of(list);
+            return Optional.of(
+                    student.get().getCourses()
+                            .stream()
+                            .map( (courseID) -> {
+                                return JSONDB.getInstance().getCourseById(courseID);
+                            })
+                            .filter(Optional::isPresent)
+                            .map(Optional::get)
+                            .collect(Collectors.toUnmodifiableList())
+            );
         }
         else {
             return Optional.empty();
