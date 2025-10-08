@@ -33,26 +33,31 @@
   ],
   "students": [
     {
+
       "studentID": "S-ALIJOH18",
-      "name": "Alice Johnson",
+      "firstName": "Alice",
+      "lastName": "Johnson",
       "email": "alice.johnson@example.com",
       "courses": ["CS101", "BIO105"]
     },
     {
       "studentID": "S-BOBSMI32",
-      "name": "Bob Smith",
+      "firstName": "Bob",
+      "lastName": "Smith",
       "email": "bob.smith@example.com",
       "courses": ["CS101", "BIO105"]
     },
     {
       "studentID": "S-CARWHI47",
-      "name": "Carol White",
+      "firstName": "Carol",
+      "lastName": "White",
       "email": "carol.white@example.com",
       "courses": ["CS101", "BIO105"]
     },
     {
       "studentID": "S-DAVBRO56",
-      "name": "David Brown",
+      "firstName": "David",
+      "lastName": "Brown",
       "email": "david.brown@example.com",
       "courses": ["MATH201", "BIO105"]
     }

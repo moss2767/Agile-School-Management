@@ -83,42 +83,11 @@ public class JSONDB {
         }
         return false;
     }
-    public Optional<List<Student>> getStudentsEnrolledInCourse(String courseId) {
-        Optional<Course> course = getCourseById(courseId);
-        if (course.isPresent()) {
-            return Optional.of(
-                    course.get().getEnrolledStudentsByID()
-                            .stream()
-                            .map(this::getStudentByID)
-                            .filter(Optional::isPresent)
-                            .map(Optional::get)
-                            .collect(Collectors.toUnmodifiableList())
-            );
-        }
-        else {
-            return Optional.empty();
-        }
-    }
-
-    public Optional<List<Course>> getCoursesStudentIsEnrolledIn(String studentID) {
-        Optional<Student> student = getStudentByID(studentID);
-        if (student.isPresent()) {
-            List<Course> list = student.get().getCourses()
-                    .stream()
-                    .map(this::getCourseById)
-                    .filter(Optional::isPresent)
-                    .map(Optional::get)
-                    .toList();
-            return Optional.of(list);
-        }
-        else {
-            return Optional.empty();
-        }
-    }
 
     public List<Course> getCourses() {
         return Collections.unmodifiableList(courses);
     }
+
     public List<Student> getStudents() {
         return Collections.unmodifiableList(students);
     }

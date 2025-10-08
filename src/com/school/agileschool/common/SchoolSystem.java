@@ -1,11 +1,15 @@
 package com.school.agileschool.common;
 
+import com.school.agileschool.persistence.JSONDB;
 import com.school.agileschool.user.Person;
 import com.school.agileschool.user.Student;
 import com.school.agileschool.user.Teacher;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class SchoolSystem {
     private SchoolSystem instance;
@@ -24,6 +28,44 @@ public class SchoolSystem {
 
     public void addCourse(Course course){
         coursesByID.put(course.getCourseID(), course);
+    }
+
+    public Optional<List<Student>> getStudentsEnrolledInCourse(String courseId) {
+        Optional<Course> course = JSONDB.getInstance().getCourseById(courseId);
+        if (course.isPresent()) {
+            return Optional.of(
+                    course.get().getEnrolledStudentsByID()
+                            .stream()
+                            .map( (studentID) -> {
+                                return JSONDB.getInstance().getStudentByID(studentID);
+                            })
+                            .filter(Optional::isPresent)
+                            .map(Optional::get)
+                            .collect(Collectors.toUnmodifiableList())
+            );
+        }
+        else {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<List<Course>> getCoursesStudentIsEnrolledIn(String studentID) {
+        Optional<Student> student = JSONDB.getInstance().getStudentByID(studentID);
+        if (student.isPresent()) {
+            return Optional.of(
+                    student.get().getCourses()
+                            .stream()
+                            .map( (courseID) -> {
+                                return JSONDB.getInstance().getCourseById(courseID);
+                            })
+                            .filter(Optional::isPresent)
+                            .map(Optional::get)
+                            .collect(Collectors.toUnmodifiableList())
+            );
+        }
+        else {
+            return Optional.empty();
+        }
     }
 
     public boolean enrollStudentToCourse(String studentID, String courseID){
