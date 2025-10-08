@@ -1,6 +1,7 @@
 package com.school.agileschool.menu;
 
 import com.school.agileschool.common.Course;
+import com.school.agileschool.common.SchoolSystem;
 import com.school.agileschool.persistence.JSONDB;
 import com.school.agileschool.utilities.InputManagementHandler;
 
@@ -22,11 +23,18 @@ public class CourseMenu {
         System.out.println("----Creating a new course----");
         String id = InputManagementHandler.getLineAsString("Course ID").toUpperCase();
         String name = InputManagementHandler.getLineAsString("Name");
+        Course createdCourse = new Course(id, name);
     }
 
     static void showCourseFlow() {
         System.out.println("----Showing a course----");
         String id = InputManagementHandler.getLineAsString("Enter Course ID").toUpperCase();
+        Optional<Course> course = db.getCourseById(id);
+        if (course.isPresent()){
+            System.out.println(course.get());
+        } else {
+            System.out.println("No course by that id");
+        }
     }
 
     static void updateCourseFlow() {
@@ -43,7 +51,7 @@ public class CourseMenu {
         }
         Optional<Course> course = db.getCourseById(id);
         if (course.isPresent()){
-            System.out.printf("Course found: %s%n", course.toString());
+            System.out.printf("Course found: %s%n", course.get());
             String response = InputManagementHandler.getLineAsString("Remove this course? (y/n/exit)").toLowerCase();
             switch (response) {
                 case "y":
