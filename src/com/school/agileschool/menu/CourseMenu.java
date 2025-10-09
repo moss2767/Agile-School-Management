@@ -42,7 +42,39 @@ public class CourseMenu {
     static void updateCourseFlow() {
         System.out.println("----Updating an existing course----");
         String id = InputManagementHandler.getLineAsString("Enter Course ID").toUpperCase();
-        Optional<Course> course = db.getCourseById(id);
+        Optional<Course> optionalCourse = db.getCourseById(id);
+        if(optionalCourse.isPresent()) {
+            Course course = optionalCourse.get();
+            String newId = InputManagementHandler.getLineAsString("Enter new id (leave blank to keep old)").toUpperCase();
+            String name = InputManagementHandler.getLineAsString("Enter new name (leave blank to keep old)");
+            String assignedTeacherID = InputManagementHandler.getLineAsString("Enter ID of teacher you wish to assign (leave blank for old)");
+            String studentIDtoEnroll = InputManagementHandler.getLineAsString("Enter ID of student you wish to enroll (or leave blank)");
+            String studentIDtoUnenroll = InputManagementHandler.getLineAsString("Enter ID of student you wish to UNenroll (or leave blank)");
+
+            if(!newId.isEmpty()) {
+                //creates a new course object with the provided id and desired name
+                String newName = name.isEmpty() ? course.getName() : name;
+                course = new Course(newId, newName);
+            }
+            if(!name.isEmpty()) {
+                course.setName(name);
+            }
+            if(!assignedTeacherID.isEmpty()) {
+                course.setAssignedTeacherID(assignedTeacherID);
+            }
+            if(!studentIDtoEnroll.isEmpty()) {
+                course.enrollStudentByID(studentIDtoEnroll);
+            }
+            if(!studentIDtoUnenroll.isEmpty()) {
+                course.unenrollStudentByID(studentIDtoUnenroll);
+            }
+
+            db.updateCourse(id, course);
+
+
+        } else {
+            System.out.println("No course by that ID exists");
+        }
     }
 
     static void removeCourseFlow() {
