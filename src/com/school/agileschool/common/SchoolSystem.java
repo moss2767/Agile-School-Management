@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class SchoolSystem {
-    private SchoolSystem instance;
+    private static SchoolSystem instance;
 
     private SchoolSystem(){}
 
@@ -104,7 +104,7 @@ public class SchoolSystem {
          */
     }
 
-    public SchoolSystem getInstance() {
+    public static SchoolSystem getInstance() {
         if (instance == null) {
             instance = new SchoolSystem();
         }
