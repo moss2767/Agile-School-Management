@@ -25,6 +25,49 @@ public class MenuRunnerTeacher {
         QUIT
     }
 
+    public static void run() {
+        InputManagementHandler.runMenuUntilQuit(new LinkedHashMap<>() {{
+            put("Add a teacher to the school", () -> {
+                List<String> keys = Arrays.asList("First name", "Last name", "Email");
+                Map<String, String> userInputAsHashMap = InputManagementHandler.fillHashMapWithScan(keys);
+                Teacher teacher = new Teacher(userInputAsHashMap.get("First name"), userInputAsHashMap.get("Last name"), userInputAsHashMap.get("Email"));
+                db.addTeacher(teacher.getTeacherID(), teacher);
+                /*
+                String tempID = teacher.generatePersonID();
+                while(true) {
+                    final String finalTempID = tempID;
+                    boolean exists = JSONDB.getInstance().getTeachers().stream()
+                            .anyMatch(teacherMatch -> finalTempID.equals(teacherMatch.getTeacherID()));
+                    if(!exists) break;
+                    tempID = teacher.generatePersonID();
+                }
+                teacher.modifyTeacherID(tempID);
+                */
+            });
+            put("Administer an existing teacher", () -> {
+                selectTeacherAndRunAdministration(db.getTeachers());
+            });
+            put("Search and administer an existing student", () -> {
+                String searchQuery = InputManagementHandler.getLineAsString("Search");
+                Pattern compiledPatternForSearchQuery = Pattern.compile(searchQuery, Pattern.CASE_INSENSITIVE);
+                List<Teacher> matches = db
+                        .getTeachers()
+                        .stream()
+                        .filter(s -> compiledPatternForSearchQuery.matcher(s.getName()).find())
+                        .collect(Collectors.toUnmodifiableList());
+                if (matches.isEmpty()) {
+                    System.out.println("No matches found");
+                }
+                else if (matches.size() == 1) {
+                    runTeacherAdministration(matches.get(0));
+                }
+                else {
+                    selectTeacherAndRunAdministration(matches);
+                }
+            });
+        }});
+    }
+
     public static void runTeacherAdministration(Teacher teacher){
         System.out.println("You are now administering teacher: " + teacher.getName());
         while (true) {
@@ -66,7 +109,7 @@ public class MenuRunnerTeacher {
             }
         }
     }
-    public static void selectAndRunTeacherAdministration(List<Teacher> teachers){
+    public static void selectTeacherAndRunAdministration(List<Teacher> teachers){
         System.out.println("Select a teacher");
         Map<String, Callable<Teacher>> menu = teachers.stream()
                 .collect(
@@ -79,45 +122,4 @@ public class MenuRunnerTeacher {
                 );
         runTeacherAdministration(InputManagementHandler.runMenuType(menu));
     }
-    public static void run() {
-        InputManagementHandler.runMenuUntilQuit(new LinkedHashMap<>() {{
-            put("Add a teacher to the school", () -> {
-                List<String> keys = Arrays.asList("First name", "Last name", "Email");
-                Map<String, String> userInputAsHashMap = InputManagementHandler.fillHashMapWithScan(keys);
-                Teacher teacher = new Teacher(userInputAsHashMap.get("First name"), userInputAsHashMap.get("Last name"), userInputAsHashMap.get("Email"));
-                String tempID = teacher.generatePersonID();
-                while(true) {
-                    final String finalTempID = tempID;
-                    boolean exists = JSONDB.getInstance().getTeachers().stream()
-                            .anyMatch(teacherMatch -> finalTempID.equals(teacherMatch.getTeacherID()));
-                    if(!exists) break;
-                    tempID = teacher.generatePersonID();
-                }
-                teacher.modifyTeacherID(tempID);
-                db.addTeacher(teacher.getTeacherID(), teacher);
-            });
-            put("Administer an existing teacher", () -> {
-                selectAndRunTeacherAdministration(db.getTeachers());
-            });
-            put("Search and administer an existing student", () -> {
-                String searchQuery = InputManagementHandler.getLineAsString("Search");
-                Pattern compiledPatternForSearchQuery = Pattern.compile(searchQuery, Pattern.CASE_INSENSITIVE);
-                List<Teacher> matches = db
-                        .getTeachers()
-                        .stream()
-                        .filter(s -> compiledPatternForSearchQuery.matcher(s.getName()).find())
-                        .collect(Collectors.toUnmodifiableList());
-                if (matches.isEmpty()) {
-                    System.out.println("No matches found");
-                }
-                else if (matches.size() == 1) {
-                    runTeacherAdministration(matches.get(0));
-                }
-                else {
-                    selectAndRunTeacherAdministration(matches);
-                }
-            });
-        }});
-    }
-
 }
