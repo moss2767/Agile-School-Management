@@ -1,13 +1,9 @@
 package com.school.agileschool.common;
 
 import com.school.agileschool.persistence.JSONDB;
-import com.school.agileschool.user.Person;
 import com.school.agileschool.user.Student;
-import com.school.agileschool.user.Teacher;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 

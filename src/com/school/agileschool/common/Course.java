@@ -41,6 +41,10 @@ public class Course {
         enrolledStudentsByID.add(studentID);
     }
 
+    public void unenrollStudentByID(String studentID){
+        enrolledStudentsByID.remove(studentID);
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -49,9 +53,5 @@ public class Course {
         sb.append(String.format("Assigned Teacher ID: %s%n", this.getAssignedTeacherID()));
         sb.append(String.format("Enrolled students by ID: %s%n", this.getEnrolledStudentsByID()));
         return sb.toString();
-    }
-
-    public void unenrollStudentByID(String studentID){
-        enrolledStudentsByID.remove(studentID);
     }
 }
