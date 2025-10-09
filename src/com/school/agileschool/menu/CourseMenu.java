@@ -17,7 +17,6 @@ public class CourseMenu {
             put("Create course", CourseMenu::createCourseFlow);
             put("Show course", CourseMenu::showCourseFlow);
             put("Update Course", CourseMenu::updateCourseFlow);
-            put("Remove Course", CourseMenu::removeCourseFlow);
         }});
     }
 
@@ -67,33 +66,6 @@ public class CourseMenu {
             }
         } else {
             System.out.println("No course by that ID exists");
-        }
-    }
-
-    static void removeCourseFlow() {
-        System.out.println("----Removing a course----");
-        String id = InputManagementHandler.getLineAsString("Enter Course ID (exit to quit)").toUpperCase();
-        if (id.equals("EXIT")) {
-            return;
-        }
-        Optional<Course> course = db.getCourseById(id);
-        if (course.isPresent()){
-            System.out.printf("Course found: %s%n", course.get());
-            String response = InputManagementHandler.getLineAsString("Remove this course? (y/n/exit)").toLowerCase();
-            switch (response) {
-                case "y":
-                    db.removeCourse(id);
-                    break;
-                case "n":
-                    removeCourseFlow();
-                    break;
-                case "exit":
-                    System.out.println("exiting...");
-                    break;
-            }
-        } else {
-            System.out.println("course not found.");
-            removeCourseFlow();
         }
     }
 
