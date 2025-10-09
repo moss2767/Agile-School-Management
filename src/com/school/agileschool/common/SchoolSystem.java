@@ -4,6 +4,7 @@ import com.school.agileschool.persistence.JSONDB;
 import com.school.agileschool.user.Student;
 import com.school.agileschool.user.Teacher;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -101,6 +102,56 @@ public class SchoolSystem {
             return true;
         }
         return false;
+    }
+
+    public boolean assignGradeToStudentByCourse(Grade grade, String studentID, String courseID) {
+        Optional<Student> student = db.getStudentByID(studentID);
+        Optional<Course> course = db.getCourseById(courseID);
+        if (course.isPresent() && student.isPresent()
+                && !student.get().getGrades().containsKey(courseID)) {
+            student.get().setGrade(courseID, grade);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean assignGradeToStudentByCourse(int grade, String studentID, String courseID) {
+        if (grade >= Grade.values().length) {
+            return false;
+        }
+        return assignGradeToStudentByCourse(Grade.values()[grade], studentID, courseID);
+    }
+
+    public boolean assignGradeToStudentByCourse(String grade, String studentID, String courseID) {
+        if (Arrays.stream(Grade.values()).noneMatch(g -> g.toString().equals(grade))) {
+            return false;
+        }
+        return assignGradeToStudentByCourse(Grade.valueOf(grade), studentID, courseID);
+    }
+
+    public boolean updateGradeOfStudentByCourse(Grade grade, String studentID, String courseID) {
+        Optional<Student> student = db.getStudentByID(studentID);
+        Optional<Course> course = db.getCourseById(courseID);
+        if (course.isPresent() && student.isPresent()
+                && student.get().getGrades().containsKey(courseID)) {
+            student.get().updateGrade(courseID, grade);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean updateGradeOfStudentByCourse(int grade, String studentID, String courseID) {
+        if (grade >= Grade.values().length) {
+            return false;
+        }
+        return updateGradeOfStudentByCourse(Grade.values()[grade], studentID, courseID);
+    }
+
+    public boolean updateGradeOfStudentByCourse(String grade, String studentID, String courseID) {
+        if (Arrays.stream(Grade.values()).noneMatch(g -> g.toString().equals(grade))) {
+            return false;
+        }
+        return updateGradeOfStudentByCourse(Grade.valueOf(grade), studentID, courseID);
     }
 
     public static SchoolSystem getInstance() {
