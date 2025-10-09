@@ -1,6 +1,7 @@
 package com.school.agileschool.menu;
 
 import com.school.agileschool.common.Course;
+import com.school.agileschool.common.SchoolSystem;
 import com.school.agileschool.persistence.JSONDB;
 import com.school.agileschool.utilities.InputManagementHandler;
 
@@ -16,7 +17,6 @@ public class CourseMenu {
             put("Create course", CourseMenu::createCourseFlow);
             put("Show course", CourseMenu::showCourseFlow);
             put("Update Course", CourseMenu::updateCourseFlow);
-            put("Remove Course", CourseMenu::removeCourseFlow);
         }});
     }
 
@@ -42,33 +42,30 @@ public class CourseMenu {
     static void updateCourseFlow() {
         System.out.println("----Updating an existing course----");
         String id = InputManagementHandler.getLineAsString("Enter Course ID").toUpperCase();
-        Optional<Course> course = db.getCourseById(id);
-    }
+        Optional<Course> courseOptional = db.getCourseById(id);
+        if(courseOptional.isPresent()) {
+            Course course = courseOptional.get();
+            String name = InputManagementHandler.getLineAsString("Enter new name (leave blank to keep old)");
+            String assignedTeacherID = InputManagementHandler.getLineAsString("Enter ID of teacher you wish to assign (leave blank for old)");
+            String studentIDtoEnroll = InputManagementHandler.getLineAsString("Enter ID of student you wish to enroll (or leave blank)");
+            String studentIDtoUnenroll = InputManagementHandler.getLineAsString("Enter ID of student you wish to UNenroll (or leave blank)");
 
-    static void removeCourseFlow() {
-        System.out.println("----Removing a course----");
-        String id = InputManagementHandler.getLineAsString("Enter Course ID (exit to quit)").toUpperCase();
-        if (id.equals("EXIT")) {
-            return;
-        }
-        Optional<Course> course = db.getCourseById(id);
-        if (course.isPresent()){
-            System.out.printf("Course found: %s%n", course.get());
-            String response = InputManagementHandler.getLineAsString("Remove this course? (y/n/exit)").toLowerCase();
-            switch (response) {
-                case "y":
-                    db.removeCourse(id);
-                    break;
-                case "n":
-                    removeCourseFlow();
-                    break;
-                case "exit":
-                    System.out.println("exiting...");
-                    break;
+            if(!name.isEmpty()) {
+                course.setName(name);
+            }
+            if(!assignedTeacherID.isEmpty()) {
+                //TODO Remove this line once assignTeacherToCourse is implemented
+                course.setAssignedTeacherID(assignedTeacherID);
+                SchoolSystem.getInstance().assignTeacherToCourse(assignedTeacherID, id);
+            }
+            if(!studentIDtoEnroll.isEmpty()) {
+                SchoolSystem.getInstance().enrollStudentToCourse(studentIDtoEnroll, id);
+            }
+            if(!studentIDtoUnenroll.isEmpty()) {
+                SchoolSystem.getInstance().unenrollStudentFromCourse(studentIDtoUnenroll, id);
             }
         } else {
-            System.out.println("course not found.");
-            removeCourseFlow();
+            System.out.println("No course by that ID exists");
         }
     }
 
