@@ -2,57 +2,42 @@ package com.school.agileschool.common;
 
 import com.school.agileschool.persistence.JSONDB;
 import com.school.agileschool.user.Student;
+import com.school.agileschool.user.Teacher;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class SchoolSystem {
     private static SchoolSystem instance;
+    private final JSONDB db;
 
-    private SchoolSystem(){}
-
-    public Optional<List<Student>> getStudentsEnrolledInCourse(String courseId) {
-        Optional<Course> course = JSONDB.getInstance().getCourseById(courseId);
-        if (course.isPresent()) {
-            return Optional.of(
-                    course.get().getEnrolledStudentsByID()
-                            .stream()
-                            .map( (studentID) -> {
-                                return JSONDB.getInstance().getStudentByID(studentID);
-                            })
-                            .filter(Optional::isPresent)
-                            .map(Optional::get)
-                            .collect(Collectors.toUnmodifiableList())
-            );
-        }
-        else {
-            return Optional.empty();
-        }
+    private SchoolSystem(){
+        db = JSONDB.getInstance();
     }
 
-    public Optional<List<Course>> getCoursesStudentIsEnrolledIn(String studentID) {
-        Optional<Student> student = JSONDB.getInstance().getStudentByID(studentID);
-        if (student.isPresent()) {
-            return Optional.of(
-                    student.get().getCourses()
-                            .stream()
-                            .map( (courseID) -> {
-                                return JSONDB.getInstance().getCourseById(courseID);
-                            })
-                            .filter(Optional::isPresent)
-                            .map(Optional::get)
-                            .collect(Collectors.toUnmodifiableList())
-            );
-        }
-        else {
-            return Optional.empty();
-        }
+    public List<Student> getStudentsEnrolledInCourse(String courseId) {
+        Optional<Course> course = db.getCourseById(courseId);
+        return course.map(c -> c.getEnrolledStudentsByID()
+                .stream()
+                .map(db::getStudentByID)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .toList()).orElseGet(List::of);
+    }
+
+    public List<Course> getCoursesStudentIsEnrolledIn(String studentID) {
+        Optional<Student> student = db.getStudentByID(studentID);
+        return student.map(s -> s.getCourses()
+                .stream()
+                .map(db::getCourseById)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .toList()).orElseGet(List::of);
     }
 
     public boolean enrollStudentToCourse(String studentID, String courseID){
-        Optional<Course> course = JSONDB.getInstance().getCourseById(courseID);
-        Optional<Student> student = JSONDB.getInstance().getStudentByID(studentID);
+        Optional<Course> course = db.getCourseById(courseID);
+        Optional<Student> student = db.getStudentByID(studentID);
         if (course.isPresent() && student.isPresent()) {
             if (course.get().getEnrolledStudentsByID().contains(studentID)
                     || student.get().getCourses().contains(courseID)) {
@@ -66,8 +51,8 @@ public class SchoolSystem {
     }
 
     public boolean unenrollStudentFromCourse(String studentID, String courseID){
-        Optional<Course> course = JSONDB.getInstance().getCourseById(courseID);
-        Optional<Student> student = JSONDB.getInstance().getStudentByID(studentID);
+        Optional<Course> course = db.getCourseById(courseID);
+        Optional<Student> student = db.getStudentByID(studentID);
         if (course.isPresent() && course.get().getEnrolledStudentsByID().contains(studentID)
                 && student.isPresent() && student.get().getCourses().contains(courseID)) {
             student.get().removeCourse(courseID);
@@ -78,30 +63,34 @@ public class SchoolSystem {
     }
 
     public boolean assignTeacherToCourse(String teacherID, String courseID){
-        return false;
-        /*
-        if (!coursesByID.containsKey(courseID) || !peopleByID.containsKey(teacherID)){
-            return false;
-        }
-        Course course = coursesByID.get(courseID);
-        if (course.getAssignedTeacherID().equals(teacherID)) {
-            return false;
-        }
-        if (peopleByID.get(teacherID) instanceof Teacher teacher) {
-            if (teacher.getCoursesTaught().contains(courseID)) {
+        Optional<Course> course = db.getCourseById(courseID);
+        Optional<Teacher> teacher = db.getTeacherById(teacherID);
+        if (course.isPresent() && teacher.isPresent()) {
+            if (course.get().getAssignedTeacherID().equals(teacherID)
+                    || teacher.get().getCoursesTaught().contains(courseID)) {
                 return false;
             }
-            if (peopleByID.containsKey(course.getAssignedTeacherID())) {
-                if (peopleByID.get(course.getAssignedTeacherID()) instanceof Teacher t) {
-                    t.removeCourseTaught(courseID);
-                }
+            if (!course.get().getAssignedTeacherID().isEmpty()) {
+                Optional<Teacher> oldTeacher = db.getTeacherById(course.get().getAssignedTeacherID());
+                oldTeacher.ifPresent(t -> t.removeCourseTaught(courseID));
             }
-            teacher.addCourseTaught(courseID);
-            course.setAssignedTeacherID(teacherID);
+            course.get().setAssignedTeacherID(teacherID);
+            teacher.get().addCourseTaught(courseID);
             return true;
         }
         return false;
-         */
+    }
+
+    public boolean removeTeacherFromCourse(String teacherID, String courseID){
+        Optional<Course> course = db.getCourseById(courseID);
+        Optional<Teacher> teacher = db.getTeacherById(teacherID);
+        if (course.isPresent() && course.get().getAssignedTeacherID().equals(teacherID)
+                && teacher.isPresent() && teacher.get().getCoursesTaught().contains(courseID)) {
+            course.get().setAssignedTeacherID("");
+            teacher.get().removeCourseTaught(courseID);
+            return true;
+        }
+        return false;
     }
 
     public static SchoolSystem getInstance() {
