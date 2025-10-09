@@ -22,6 +22,8 @@ public class MenuRunnerUser {
     private enum StudentMenuReturnTypeOfChange {
         FIRST_NAME,
         LAST_NAME,
+        EMAIL,
+        NO_CHANGE,
         QUIT
     }
     public static void runStudentAdministration(Student student){
@@ -42,6 +44,11 @@ public class MenuRunnerUser {
                         StudentMenuReturnTypeOfChange typeOfChangeFromInput = InputManagementHandler.runMenuType(new LinkedHashMap<String, Callable<StudentMenuReturnTypeOfChange>>() {{
                             put("Change first name", () -> StudentMenuReturnTypeOfChange.FIRST_NAME);
                             put("Change last name", () -> StudentMenuReturnTypeOfChange.LAST_NAME);
+                            put("Change email", () -> StudentMenuReturnTypeOfChange.EMAIL);
+                            put("Print student details", () -> {
+                                System.out.println(student);
+                                return StudentMenuReturnTypeOfChange.NO_CHANGE;
+                            });
                             put("Quit", () -> StudentMenuReturnTypeOfChange.QUIT);
                         }});
                         if (typeOfChangeFromInput == StudentMenuReturnTypeOfChange.FIRST_NAME) {
@@ -51,6 +58,10 @@ public class MenuRunnerUser {
                         if (typeOfChangeFromInput == StudentMenuReturnTypeOfChange.LAST_NAME) {
                             String input = InputManagementHandler.getLineAsString("Last name").trim();
                             student.setLastName(input);
+                        }
+                        if (typeOfChangeFromInput == StudentMenuReturnTypeOfChange.EMAIL) {
+                            String input = InputManagementHandler.getLineAsString("Last name").trim();
+                            student.setEmail(input);
                         }
                         if (typeOfChangeFromInput == StudentMenuReturnTypeOfChange.QUIT) {
                             break;
