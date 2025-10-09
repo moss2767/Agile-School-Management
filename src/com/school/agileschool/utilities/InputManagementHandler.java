@@ -4,6 +4,16 @@ import java.util.*;
 import java.util.concurrent.Callable;
 
 public class InputManagementHandler {
+    public static Map<String, String> fillHashMapWithScan(List<String> keys) {
+        return fillHashMapWithScan(new Scanner(System.in), keys);
+    }
+    public static Map<String, String> fillHashMapWithScan(Scanner scanner, List<String> keys) {
+        Map<String, String> result = new HashMap<>();
+        for (String key : keys) {
+            result.put(key, getLineAsString(key));
+        }
+        return result;
+    }
     public static int getLineAsNumber(String prompt){
         return getLineAsNumber(new Scanner(System.in), prompt);
     }
