@@ -60,7 +60,7 @@ public class MenuRunnerUser {
                             student.setLastName(input);
                         }
                         if (typeOfChangeFromInput == StudentMenuReturnTypeOfChange.EMAIL) {
-                            String input = InputManagementHandler.getLineAsString("Last name").trim();
+                            String input = InputManagementHandler.getLineAsString("Email").trim();
                             student.setEmail(input);
                         }
                         if (typeOfChangeFromInput == StudentMenuReturnTypeOfChange.QUIT) {
