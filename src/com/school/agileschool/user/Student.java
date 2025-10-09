@@ -53,7 +53,7 @@ public class Student extends Person {
         }
     }
 
-    public String getGradesAsFormatedString() {
+    public String getGradesAsFormattedString() {
         StringBuilder sb = new StringBuilder();
         grades.forEach((course, grade) -> sb.append(String.format("%s: %s%n", course, grade)));
         return sb.toString();
