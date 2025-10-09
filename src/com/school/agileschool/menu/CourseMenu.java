@@ -38,6 +38,8 @@ public class CourseMenu {
             System.out.println(formattedCourseInfo(course.get()));
             InputManagementHandler.runMenuUntilQuit(new LinkedHashMap<>() {{
                 put("List enrolled students", () -> printStudents(course.get().getEnrolledStudentsByID()));
+                put("Update course", () -> updateCourse(id));
+                put("Display course info again", () -> System.out.println(formattedCourseInfo(course.get())));
             }});
         } else {
             System.out.println("No course by that id");
@@ -47,7 +49,11 @@ public class CourseMenu {
     private static void updateCourseFlow() {
         System.out.println("----Updating an existing course----");
         String id = InputManagementHandler.getLineAsString("Enter Course ID").toUpperCase();
-        Optional<Course> courseOptional = db.getCourseById(id);
+        updateCourse(id);
+    }
+
+    private static void updateCourse(String courseID) {
+        Optional<Course> courseOptional = db.getCourseById(courseID);
         if(courseOptional.isPresent()) {
             Course course = courseOptional.get();
             String name = InputManagementHandler.getLineAsString("Enter new name (leave blank to keep old)");
@@ -61,13 +67,13 @@ public class CourseMenu {
             if(!assignedTeacherID.isEmpty()) {
                 //TODO Remove this line once assignTeacherToCourse is implemented
                 course.setAssignedTeacherID(assignedTeacherID);
-                SchoolSystem.getInstance().assignTeacherToCourse(assignedTeacherID, id);
+                SchoolSystem.getInstance().assignTeacherToCourse(assignedTeacherID, courseID);
             }
             if(!studentIDtoEnroll.isEmpty()) {
-                SchoolSystem.getInstance().enrollStudentToCourse(studentIDtoEnroll, id);
+                SchoolSystem.getInstance().enrollStudentToCourse(studentIDtoEnroll, courseID);
             }
             if(!studentIDtoUnenroll.isEmpty()) {
-                SchoolSystem.getInstance().unenrollStudentFromCourse(studentIDtoUnenroll, id);
+                SchoolSystem.getInstance().unenrollStudentFromCourse(studentIDtoUnenroll, courseID);
             }
         } else {
             System.out.println("No course by that ID exists");
