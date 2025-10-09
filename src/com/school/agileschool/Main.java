@@ -10,13 +10,13 @@ public class Main {
         try {
             db = JSONDB.getInstanceFromDisk();
         } catch(Exception e) {
-            throw new RuntimeException("Runtime error", e);
+            throw new RuntimeException("Failed to read database from disk", e);
         }
         MenuRunner.getInstance().run();
         try {
             db.writeToDisk();
         } catch(Exception e) {
-            throw new RuntimeException("Runtime error", e);
+            throw new RuntimeException("Failed to save database to disk", e);
         }
     }
 }
