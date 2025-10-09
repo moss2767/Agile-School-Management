@@ -35,6 +35,16 @@ public class SchoolSystem {
                 .toList()).orElseGet(List::of);
     }
 
+    public List<Course> getCoursesHeldByTeacher(String teacherID) {
+        Optional<Teacher> teacher = db.getTeacherById(teacherID);
+        return teacher.map(t -> t.getCoursesTaught()
+                .stream()
+                .map(db::getCourseById)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .toList()).orElseGet(List::of);
+    }
+
     public boolean enrollStudentToCourse(String studentID, String courseID){
         Optional<Course> course = db.getCourseById(courseID);
         Optional<Student> student = db.getStudentByID(studentID);
