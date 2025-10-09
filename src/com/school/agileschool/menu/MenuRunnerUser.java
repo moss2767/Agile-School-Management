@@ -95,7 +95,15 @@ public class MenuRunnerUser {
                 List<String> keys = Arrays.asList("First name", "Last name", "Email");
                 Map<String, String> userInputAsHashMap = InputManagementHandler.fillHashMapWithScan(keys);
                 Student student = new Student(userInputAsHashMap.get("First name"), userInputAsHashMap.get("Last name"), userInputAsHashMap.get("Email"));
-                student.modifyStudentID(student.generatePersonID());
+                String tempID = student.generatePersonID();
+                while(true) {
+                    final String finalTempID = tempID;
+                    boolean exists = JSONDB.getInstance().getStudents().stream()
+                            .anyMatch(studentMatch -> finalTempID.equals(studentMatch.getStudentID()));
+                    if(!exists) break;
+                    tempID = student.generatePersonID();
+                }
+                student.modifyStudentID(tempID);
                 db.addStudent(student.getStudentID(), student);
             });
             put("Administer an existing student", () -> {
