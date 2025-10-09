@@ -66,16 +66,6 @@ public class JSONDB {
         return false;
     }
 
-    public boolean updateCourse(String oldCourseId, Course course) {
-        Optional<Course> courseOptional = getCourseById(oldCourseId);
-        if (courseOptional.isPresent()) {
-            int courseIndex = courses.indexOf(courseOptional.get());
-            courses.set(courseIndex, course);
-            return true;
-        }
-        return false;
-    }
-
     public boolean addStudent(String studentId, Student student) {
         Optional<Student> studentOptional = getStudentByID(studentId);
         if (studentOptional.isPresent()) {
