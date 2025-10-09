@@ -1,6 +1,7 @@
 package com.school.agileschool.menu;
 
 import com.school.agileschool.common.Course;
+import com.school.agileschool.common.SchoolSystem;
 import com.school.agileschool.persistence.JSONDB;
 import com.school.agileschool.utilities.InputManagementHandler;
 
@@ -45,38 +46,25 @@ public class CourseMenu {
         Optional<Course> courseOptional = db.getCourseById(id);
         if(courseOptional.isPresent()) {
             Course course = courseOptional.get();
-            String newId = InputManagementHandler.getLineAsString("Enter new id (leave blank to keep old)").toUpperCase();
             String name = InputManagementHandler.getLineAsString("Enter new name (leave blank to keep old)");
             String assignedTeacherID = InputManagementHandler.getLineAsString("Enter ID of teacher you wish to assign (leave blank for old)");
             String studentIDtoEnroll = InputManagementHandler.getLineAsString("Enter ID of student you wish to enroll (or leave blank)");
             String studentIDtoUnenroll = InputManagementHandler.getLineAsString("Enter ID of student you wish to UNenroll (or leave blank)");
 
-            if(!newId.isEmpty()) {
-                //creates a new course object with the provided id and desired name
-                String newName = name.isEmpty() ? course.getName() : name;
-                Course oldCourse = course;
-                course = new Course(newId, newName);
-                course.setAssignedTeacherID(oldCourse.getAssignedTeacherID());
-                for( String enrolledStudentID : oldCourse.getEnrolledStudentsByID()) {
-                    course.enrollStudentByID(enrolledStudentID);
-                }
-            }
             if(!name.isEmpty()) {
                 course.setName(name);
             }
             if(!assignedTeacherID.isEmpty()) {
+                //TODO Remove this line once assignTeacherToCourse is implemented
                 course.setAssignedTeacherID(assignedTeacherID);
+                SchoolSystem.getInstance().assignTeacherToCourse(assignedTeacherID, id);
             }
             if(!studentIDtoEnroll.isEmpty()) {
-                course.enrollStudentByID(studentIDtoEnroll);
+                SchoolSystem.getInstance().enrollStudentToCourse(studentIDtoEnroll, id);
             }
             if(!studentIDtoUnenroll.isEmpty()) {
-                course.unenrollStudentByID(studentIDtoUnenroll);
+                SchoolSystem.getInstance().unenrollStudentFromCourse(studentIDtoUnenroll, id);
             }
-
-            db.updateCourse(id, course);
-
-
         } else {
             System.out.println("No course by that ID exists");
         }
