@@ -42,9 +42,9 @@ public class CourseMenu {
     static void updateCourseFlow() {
         System.out.println("----Updating an existing course----");
         String id = InputManagementHandler.getLineAsString("Enter Course ID").toUpperCase();
-        Optional<Course> optionalCourse = db.getCourseById(id);
-        if(optionalCourse.isPresent()) {
-            Course course = optionalCourse.get();
+        Optional<Course> courseOptional = db.getCourseById(id);
+        if(courseOptional.isPresent()) {
+            Course course = courseOptional.get();
             String newId = InputManagementHandler.getLineAsString("Enter new id (leave blank to keep old)").toUpperCase();
             String name = InputManagementHandler.getLineAsString("Enter new name (leave blank to keep old)");
             String assignedTeacherID = InputManagementHandler.getLineAsString("Enter ID of teacher you wish to assign (leave blank for old)");
@@ -54,7 +54,12 @@ public class CourseMenu {
             if(!newId.isEmpty()) {
                 //creates a new course object with the provided id and desired name
                 String newName = name.isEmpty() ? course.getName() : name;
+                Course oldCourse = course;
                 course = new Course(newId, newName);
+                course.setAssignedTeacherID(oldCourse.getAssignedTeacherID());
+                for( String enrolledStudentID : oldCourse.getEnrolledStudentsByID()) {
+                    course.enrollStudentByID(enrolledStudentID);
+                }
             }
             if(!name.isEmpty()) {
                 course.setName(name);
