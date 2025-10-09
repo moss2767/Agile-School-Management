@@ -7,22 +7,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
+import com.school.agileschool.persistence.JSONDB;
+
 public class Student extends Person {
-    private String studentID;
     private final List<String> courses = new ArrayList<>();
     private final Map<String, Grade> grades = new HashMap<>();
 
     public Student(String firstName, String lastName, String email) {
         super(firstName, lastName, email);
-        this.studentID = String.format("S-%s", generatePersonID());
     }
 
     public String getStudentID () {
-        return studentID;
-    }
-
-    public void modifyStudentID (String studentID) {
-        this.studentID = studentID;
+        return getId();
     }
 
     public List<String> getCourses () {
@@ -66,6 +62,11 @@ public class Student extends Person {
 
     public Map<String, Grade> getGrades() {
         return new HashMap<>(grades);
+    }
+
+    @Override
+    boolean checkIfIDExistInPersistentStorage(String id) {
+        return JSONDB.getInstance().getStudentByID(id).isPresent();
     }
 
     @Override
