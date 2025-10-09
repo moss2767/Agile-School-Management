@@ -1,23 +1,20 @@
 
 package com.school.agileschool.user;
 
+import com.school.agileschool.persistence.JSONDB;
+
 import java.util.ArrayList;
 
 public class Teacher extends Person {
-    private String teacherID;
+    //private String teacherID;
     private final ArrayList<String> coursesTaught = new ArrayList<>();
 
     public Teacher(String firstName, String lastName, String email) {
         super(firstName,lastName,email);
-        this.teacherID = String.format("T-%s",generatePersonID());
     }
 
     public String getTeacherID() {
-        return teacherID;
-    }
-
-    public void modifyTeacherID(String teacherID) {
-        this.teacherID = teacherID;
+        return getId();
     }
 
     public ArrayList<String> getCoursesTaught() {
@@ -33,12 +30,17 @@ public class Teacher extends Person {
     }
 
     @Override
+    boolean checkIfIDExistInPersistentStorage(String id) {
+        return JSONDB.getInstance().getTeacherById(id).isPresent();
+    }
+
+    @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("Teacher first name: %s%n", this.getFirstName()));
         sb.append(String.format("Teacher last name: %s%n", this.getLastName()));
         sb.append(String.format("Teacher email: %s%n", this.getEmail()));
-        sb.append(String.format("TeacherID: %s%n", teacherID));
+        sb.append(String.format("TeacherID: %s%n", this.getId()));
         return sb.toString();
     }
 }

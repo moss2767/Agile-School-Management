@@ -95,6 +95,8 @@ public class MenuRunnerUser {
                 List<String> keys = Arrays.asList("First name", "Last name", "Email");
                 Map<String, String> userInputAsHashMap = InputManagementHandler.fillHashMapWithScan(keys);
                 Student student = new Student(userInputAsHashMap.get("First name"), userInputAsHashMap.get("Last name"), userInputAsHashMap.get("Email"));
+                db.addStudent(student.getStudentID(), student);
+                /*
                 String tempID = student.generatePersonID();
                 while(true) {
                     final String finalTempID = tempID;
@@ -105,6 +107,7 @@ public class MenuRunnerUser {
                 }
                 student.modifyStudentID(tempID);
                 db.addStudent(student.getStudentID(), student);
+                 */
             });
             put("Administer an existing student", () -> {
                 selectAndRunStudentAdministration(db.getStudents());

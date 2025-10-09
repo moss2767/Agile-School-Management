@@ -2,6 +2,8 @@ package com.school.agileschool.user;
 
 import com.school.agileschool.common.Grade;
 
+import com.school.agileschool.persistence.JSONDB;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +68,11 @@ public class Student extends Person {
 
     public Map<String, Grade> getGrades() {
         return new HashMap<>(grades);
+    }
+
+    @Override
+    boolean checkIfIDExistInPersistentStorage(String id) {
+        return JSONDB.getInstance().getStudentByID(id).isPresent();
     }
 
     @Override
