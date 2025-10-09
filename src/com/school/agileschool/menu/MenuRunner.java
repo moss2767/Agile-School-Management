@@ -11,8 +11,8 @@ public class MenuRunner {
         InputManagementHandler.runMenuUntilQuit(new LinkedHashMap<>() {{
             System.out.println("Welcome to school");
             put("User Menu", MenuRunnerUser::run);
-            put("Teacher Menu",MenuRunnerTeacher::run);
             put("Course Menu", CourseMenu::run);
+            put("Teacher Menu",MenuRunnerTeacher::run);
         }});
     }
 
