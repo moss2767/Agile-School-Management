@@ -1,1 +1,96 @@
-{"courses":[{"courseID":"CS101","name":"Introduction to Computer Science","assignedTeacherID":"T-RICSTA18","enrolledStudentsByID":["S-ALIJOH18","S-BOBSMI32","S-CARWHI47"]},{"courseID":"MATH201","name":"Calculus II","assignedTeacherID":"T-GOTLEI78","enrolledStudentsByID":["S-DAVBRO56","S-ALIJOH18"]},{"courseID":"ENG301","name":"English Literature","assignedTeacherID":"T-RAYCAR27","enrolledStudentsByID":["S-BOBSMI32","S-CARWHI47","S-DAVBRO56"]},{"courseID":"HIST210","name":"World History","assignedTeacherID":"T-MARCOR44","enrolledStudentsByID":["S-ALIJOH18","S-BOBSMI32"]},{"courseID":"BIO105","name":"General Biology","assignedTeacherID":"T-CARLIN52","enrolledStudentsByID":["S-ALIJOH18","S-BOBSMI32","S-CARWHI47","S-DAVBRO56"]}],"students":[{"studentID":"S-ALIJOH18","courses":["CS101","BIO105"],"firstName":"Alice","lastName":"Johnson","email":"alice.johnson@example.com"},{"studentID":"S-BOBSMI32","courses":["CS101","BIO105"],"firstName":"Bob","lastName":"Smith","email":"bob.smith@example.com"},{"studentID":"S-CARWHI47","courses":["CS101","BIO105"],"firstName":"Carol","lastName":"White","email":"carol.white@example.com"},{"studentID":"S-DAVBRO56","courses":["MATH201","BIO105"],"firstName":"David","lastName":"Brown","email":"david.brown@example.com"}],"teachers":[]}
+{
+  "courses": [
+    {
+      "courseID": "CS101",
+      "name": "Introduction to Computer Science",
+      "assignedTeacherID": "T-RICSTA18",
+      "enrolledStudentsByID": [
+        "S-ALIJOH18",
+        "S-BOBSMI32",
+        "S-CARWHI47"
+      ]
+    },
+    {
+      "courseID": "MATH201",
+      "name": "Calculus II",
+      "assignedTeacherID": "T-GOTLEI78",
+      "enrolledStudentsByID": [
+        "S-DAVBRO56",
+        "S-ALIJOH18"
+      ]
+    },
+    {
+      "courseID": "ENG301",
+      "name": "English Literature",
+      "assignedTeacherID": "T-RAYCAR27",
+      "enrolledStudentsByID": [
+        "S-BOBSMI32",
+        "S-CARWHI47",
+        "S-DAVBRO56"
+      ]
+    },
+    {
+      "courseID": "HIST210",
+      "name": "World History",
+      "assignedTeacherID": "T-MARCOR44",
+      "enrolledStudentsByID": [
+        "S-ALIJOH18",
+        "S-BOBSMI32"
+      ]
+    },
+    {
+      "courseID": "BIO105",
+      "name": "General Biology",
+      "assignedTeacherID": "T-CARLIN52",
+      "enrolledStudentsByID": [
+        "S-ALIJOH18",
+        "S-BOBSMI32",
+        "S-CARWHI47",
+        "S-DAVBRO56"
+      ]
+    }
+  ],
+  "students": [
+    {
+      "id": "S-ALIJOH18",
+      "courses": [
+        "CS101",
+        "BIO105"
+      ],
+      "firstName": "Alice",
+      "lastName": "Johnson",
+      "email": "alice.johnson@example.com"
+    },
+    {
+      "id": "S-BOBSMI32",
+      "courses": [
+        "CS101",
+        "BIO105"
+      ],
+      "firstName": "Bob",
+      "lastName": "Smith",
+      "email": "bob.smith@example.com"
+    },
+    {
+      "id": "S-CARWHI47",
+      "courses": [
+        "CS101",
+        "BIO105"
+      ],
+      "firstName": "Carol",
+      "lastName": "White",
+      "email": "carol.white@example.com"
+    },
+    {
+      "id": "S-DAVBRO56",
+      "courses": [
+        "MATH201",
+        "BIO105"
+      ],
+      "firstName": "David",
+      "lastName": "Brown",
+      "email": "david.brown@example.com"
+    }
+  ],
+  "teachers": []
+}
