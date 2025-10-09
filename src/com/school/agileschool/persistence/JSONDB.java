@@ -2,7 +2,9 @@ package com.school.agileschool.persistence;
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.school.agileschool.common.Course;
+import com.school.agileschool.common.Grade;
 import com.school.agileschool.user.Student;
+import com.school.agileschool.user.Teacher;
 
 import java.io.File;
 import java.io.FileReader;
@@ -19,6 +21,8 @@ public class JSONDB {
 
     @Expose
     final private List<Student> students = new ArrayList<>();
+
+    final private List<Teacher> teachers = new ArrayList<>();
 
     final private static String FILENAME = "persistence/db.json";
 
@@ -45,6 +49,14 @@ public class JSONDB {
         return courses
                 .stream()
                 .filter(course -> id.equals(course.getCourseID()))
+                .findFirst();
+    }
+
+
+    public Optional<Teacher> getTeacherById(String id) {
+        return teachers
+                .stream()
+                .filter(teacher -> id.equals(teacher.getTeacherID()))
                 .findFirst();
     }
 
@@ -79,6 +91,25 @@ public class JSONDB {
         Optional<Student> studentOptional = getStudentByID(studentId);
         if (studentOptional.isPresent()) {
             students.remove(studentOptional.get());
+            return true;
+        }
+        return false;
+    }
+
+
+    public boolean addTeacher(String teacherId, Teacher teacher) {
+        Optional<Teacher> teacherOptional = getTeacherById(teacherId);
+        if (teacherOptional.isPresent()) {
+            return false;
+        }
+        teachers.add(teacher);
+        return true;
+    }
+
+    public boolean removeTeacher(String teacherId) {
+        Optional<Teacher> teacherOptional = getTeacherById(teacherId);
+        if (teacherOptional.isPresent()) {
+            students.remove(teacherOptional.get());
             return true;
         }
         return false;
