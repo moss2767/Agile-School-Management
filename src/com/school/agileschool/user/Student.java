@@ -2,12 +2,12 @@ package com.school.agileschool.user;
 
 import com.school.agileschool.common.Grade;
 
+import com.school.agileschool.persistence.JSONDB;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
-
-import com.school.agileschool.persistence.JSONDB;
 
 public class Student extends Person {
     private final List<String> courses = new ArrayList<>();
