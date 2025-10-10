@@ -1,5 +1,6 @@
 package com.school.agileschool.menu;
 
+import com.school.agileschool.common.Course;
 import com.school.agileschool.common.SchoolSystem;
 import com.school.agileschool.persistence.JSONDB;
 import com.school.agileschool.user.Person;
@@ -8,7 +9,6 @@ import com.school.agileschool.utilities.InputManagementHandler;
 
 import java.util.*;
 import java.util.concurrent.Callable;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -22,6 +22,7 @@ public class MenuRunnerUser {
     private enum StudentMenuReturnTypeOfChange {
         FIRST_NAME,
         LAST_NAME,
+        ASSIGN_GRADE,
         EMAIL,
         NO_CHANGE,
         QUIT
@@ -44,6 +45,7 @@ public class MenuRunnerUser {
                         StudentMenuReturnTypeOfChange typeOfChangeFromInput = InputManagementHandler.runMenuType(new LinkedHashMap<String, Callable<StudentMenuReturnTypeOfChange>>() {{
                             put("Change first name", () -> StudentMenuReturnTypeOfChange.FIRST_NAME);
                             put("Change last name", () -> StudentMenuReturnTypeOfChange.LAST_NAME);
+                            put("Assign a new grade", () -> StudentMenuReturnTypeOfChange.ASSIGN_GRADE);
                             put("Change email", () -> StudentMenuReturnTypeOfChange.EMAIL);
                             put("Print student details", () -> {
                                 System.out.println(student);
@@ -59,6 +61,10 @@ public class MenuRunnerUser {
                             String input = InputManagementHandler.getLineAsString("Last name").trim();
                             student.setLastName(input);
                         }
+                        if (typeOfChangeFromInput == StudentMenuReturnTypeOfChange.ASSIGN_GRADE) {
+                            Course selectedCourse = selectAndRunCourse(db.getCourses());
+                            String input = InputManagementHandler.getLineAsString("Grade").trim().toUpperCase();
+                            SchoolSystem.getInstance().assignGradeToStudentByCourse(input, student.getStudentID(), selectedCourse.getCourseID());
                         if (typeOfChangeFromInput == StudentMenuReturnTypeOfChange.EMAIL) {
                             String input = InputManagementHandler.getLineAsString("Email").trim();
                             student.setEmail(input);
@@ -88,6 +94,19 @@ public class MenuRunnerUser {
                         )
                 );
         runStudentAdministration(InputManagementHandler.runMenuType(menu));
+    }
+    public static Course selectAndRunCourse(List<Course> courses){
+        System.out.println("Select a course");
+        Map<String, Callable<Course>> menu = courses.stream()
+                .collect(
+                        Collectors.toMap(
+                                Course::getName,
+                                course -> () -> course,
+                                (existing, replacement) -> existing, // merge function in case of duplicate keys
+                                HashMap::new       // supplier for the HashMap
+                        )
+                );
+        return InputManagementHandler.runMenuType(menu);
     }
     public static void run() {
         InputManagementHandler.runMenuUntilQuit(new LinkedHashMap<>() {{
