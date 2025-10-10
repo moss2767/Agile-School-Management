@@ -10,21 +10,15 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class Student extends Person {
-    private String studentID;
     private final List<String> courses = new ArrayList<>();
     private final Map<String, Grade> grades = new HashMap<>();
 
     public Student(String firstName, String lastName, String email) {
         super(firstName, lastName, email);
-        this.studentID = String.format("S-%s", generatePersonID());
     }
 
     public String getStudentID () {
-        return studentID;
-    }
-
-    public void modifyStudentID (String studentID) {
-        this.studentID = studentID;
+        return getId();
     }
 
     public List<String> getCourses () {
