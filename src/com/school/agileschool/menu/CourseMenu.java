@@ -37,7 +37,7 @@ public class CourseMenu {
         if (course.isPresent()){
             System.out.println(formattedCourseInfo(course.get()));
             InputManagementHandler.runMenuUntilQuit(new LinkedHashMap<>() {{
-                put("List enrolled students", () -> printStudents(course.get().getEnrolledStudentsByID()));
+                put("List enrolled students", () -> printStudents(course.get().getEnrolledStudentsByID(), id));
                 put("Update course", () -> updateCourse(id));
                 put("Display course info again", () -> System.out.println(formattedCourseInfo(course.get())));
             }});
@@ -88,9 +88,9 @@ public class CourseMenu {
         }
     }
 
-    private static void printStudents(List<String> studentIDList) {
+    private static void printStudents(List<String> studentIDList,String courseID) {
         for (String studentID : studentIDList) {
-            System.out.println(formattedStudentInfoFromID(studentID));
+            System.out.println(formattedStudentInfoFromID(studentID, courseID));
         }
     }
 
@@ -101,13 +101,13 @@ public class CourseMenu {
         return sb.toString();
     }
 
-    private static String formattedStudentInfoFromID(String studentID) {
+    private static String formattedStudentInfoFromID(String studentID, String courseID) {
         Optional<Student> studentOptional = db.getStudentByID(studentID);
         StringBuilder sb = new StringBuilder();
         if (studentOptional.isPresent()) {
             Student student = studentOptional.get();
             sb.append(String.format("%s, %s (%s)%n", student.getLastName(), student.getFirstName(), studentID));
-//            sb.append(String.format("Grades %s", student.getGrades().toString));
+            sb.append(String.format("Grade: %s%n", student.getGradeFromCourse(courseID)));
         }
         return sb.toString();
     }
