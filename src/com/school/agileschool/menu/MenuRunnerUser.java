@@ -23,6 +23,8 @@ public class MenuRunnerUser {
         FIRST_NAME,
         LAST_NAME,
         ASSIGN_GRADE,
+        EMAIL,
+        NO_CHANGE,
         QUIT
     }
     public static void runStudentAdministration(Student student){
@@ -44,6 +46,11 @@ public class MenuRunnerUser {
                             put("Change first name", () -> StudentMenuReturnTypeOfChange.FIRST_NAME);
                             put("Change last name", () -> StudentMenuReturnTypeOfChange.LAST_NAME);
                             put("Assign a new grade", () -> StudentMenuReturnTypeOfChange.ASSIGN_GRADE);
+                            put("Change email", () -> StudentMenuReturnTypeOfChange.EMAIL);
+                            put("Print student details", () -> {
+                                System.out.println(student);
+                                return StudentMenuReturnTypeOfChange.NO_CHANGE;
+                            });
                             put("Quit", () -> StudentMenuReturnTypeOfChange.QUIT);
                         }});
                         if (typeOfChangeFromInput == StudentMenuReturnTypeOfChange.FIRST_NAME) {
@@ -58,6 +65,9 @@ public class MenuRunnerUser {
                             Course selectedCourse = selectAndRunCourse(db.getCourses());
                             String input = InputManagementHandler.getLineAsString("Grade").trim().toUpperCase();
                             SchoolSystem.getInstance().assignGradeToStudentByCourse(input, student.getStudentID(), selectedCourse.getCourseID());
+                        if (typeOfChangeFromInput == StudentMenuReturnTypeOfChange.EMAIL) {
+                            String input = InputManagementHandler.getLineAsString("Email").trim();
+                            student.setEmail(input);
                         }
                         if (typeOfChangeFromInput == StudentMenuReturnTypeOfChange.QUIT) {
                             break;
