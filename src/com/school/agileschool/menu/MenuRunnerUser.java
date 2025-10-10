@@ -65,6 +65,7 @@ public class MenuRunnerUser {
                             Course selectedCourse = selectAndRunCourse(db.getCourses());
                             String input = InputManagementHandler.getLineAsString("Grade").trim().toUpperCase();
                             SchoolSystem.getInstance().assignGradeToStudentByCourse(input, student.getStudentID(), selectedCourse.getCourseID());
+                        }
                         if (typeOfChangeFromInput == StudentMenuReturnTypeOfChange.EMAIL) {
                             String input = InputManagementHandler.getLineAsString("Email").trim();
                             student.setEmail(input);
