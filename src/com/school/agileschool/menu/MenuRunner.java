@@ -12,6 +12,7 @@ public class MenuRunner {
             System.out.println("Welcome to school");
             put("User Menu", MenuRunnerUser::run);
             put("Course Menu", CourseMenu::run);
+            put("Teacher Menu",MenuRunnerTeacher::run);
         }});
     }
 

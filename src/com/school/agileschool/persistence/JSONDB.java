@@ -123,6 +123,10 @@ public class JSONDB {
         return Collections.unmodifiableList(students);
     }
 
+    public List<Teacher> getTeachers() {
+        return Collections.unmodifiableList(teachers);
+    }
+
     private static JSONDB instanceFromDisk() throws IOException {
         File file = new File(FILENAME);
         Gson gson = new Gson();
